@@ -20,9 +20,9 @@ Como se trata de um site voltado aos clientes, será necessário que já existam
 
 ###### 2. String de conexão
 1. Edite o arquivo AgenciaViagens/Web.config, na linha 13, inserindo o seu hostname após data source;
-``` ...
-``` data source=Aqui_vem_seu_hostname;initial catalog=AgenciaViagens;
-``` ...
+```
+data source=Aqui_vem_seu_hostname;initial catalog=AgenciaViagens;
+```
 ###### 3. Execução
 1. Abra o arquivo AgenciaViagens.sln com o Visual Studio e execute
 --------- Fim ---------
