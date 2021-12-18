@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AgenciaViagens.Models.Promocao>
+
+@{
+    ViewBag.Title = "Promoções";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-responsive text-center">
+        <thead class="bg-primary">
+            <tr>
+                <th class="text-center">
+                    Desconto
+                </th>
+                <th class="text-center">
+                    Vencimento
+                </th>
+                <th class="text-center">
+                    Destino
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @String.Format("{0:P0}", item.desconto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vencimento)
+                    </td>
+                    <td>
+                        @if (item.destino != null)
+                        {
+                            @String.Concat(item.Destino1.cidade, " - ", item.Destino1.uf)
+                        }
+                        else
+                        {
+                            @String.Format("Qualquer destino!!!")
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Selecionar", "Redirect", "Promocoes", routeValues: new { id = item.id_promo }, htmlAttributes: new { @class = "btn btn-default" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

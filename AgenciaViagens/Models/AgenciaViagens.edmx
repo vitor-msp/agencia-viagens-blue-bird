@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AgenciaViagensModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adquire">
+          <Key>
+            <PropertyRef Name="id_adq" />
+          </Key>
+          <Property Name="id_adq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cliente" Type="int" Nullable="false" />
+          <Property Name="viagem" Type="int" Nullable="false" />
+          <Property Name="promocao" Type="int" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cli" />
+          </Key>
+          <Property Name="id_cli" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rg" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="cpf" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="dt_nasc" Type="date" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Destino">
+          <Key>
+            <PropertyRef Name="id_dest" />
+          </Key>
+          <Property Name="id_dest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cidade" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="uf" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="loc_desemb" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promocao">
+          <Key>
+            <PropertyRef Name="id_promo" />
+          </Key>
+          <Property Name="id_promo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="destino" Type="int" />
+          <Property Name="desconto" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="vencimento" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Viagem">
+          <Key>
+            <PropertyRef Name="id_viag" />
+          </Key>
+          <Property Name="id_viag" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="destino" Type="int" Nullable="false" />
+          <Property Name="partida" Type="smalldatetime" Nullable="false" />
+          <Property Name="chegada" Type="smalldatetime" Nullable="false" />
+          <Property Name="vlr_padrao" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_adq_cli">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cli" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_adq_promo">
+          <End Role="Promocao" Type="Self.Promocao" Multiplicity="0..1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocao">
+              <PropertyRef Name="id_promo" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="promocao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_adq_viag">
+          <End Role="Viagem" Type="Self.Viagem" Multiplicity="1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viagem">
+              <PropertyRef Name="id_viag" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="viagem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_promo_dest">
+          <End Role="Destino" Type="Self.Destino" Multiplicity="0..1" />
+          <End Role="Promocao" Type="Self.Promocao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Destino">
+              <PropertyRef Name="id_dest" />
+            </Principal>
+            <Dependent Role="Promocao">
+              <PropertyRef Name="destino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_viag_dest">
+          <End Role="Destino" Type="Self.Destino" Multiplicity="1" />
+          <End Role="Viagem" Type="Self.Viagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Destino">
+              <PropertyRef Name="id_dest" />
+            </Principal>
+            <Dependent Role="Viagem">
+              <PropertyRef Name="destino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgenciaViagensModelStoreContainer">
+          <EntitySet Name="Adquire" EntityType="Self.Adquire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Destino" EntityType="Self.Destino" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promocao" EntityType="Self.Promocao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Viagem" EntityType="Self.Viagem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_adq_cli" Association="Self.fk_adq_cli">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_adq_promo" Association="Self.fk_adq_promo">
+            <End Role="Promocao" EntitySet="Promocao" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_adq_viag" Association="Self.fk_adq_viag">
+            <End Role="Viagem" EntitySet="Viagem" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_promo_dest" Association="Self.fk_promo_dest">
+            <End Role="Destino" EntitySet="Destino" />
+            <End Role="Promocao" EntitySet="Promocao" />
+          </AssociationSet>
+          <AssociationSet Name="fk_viag_dest" Association="Self.fk_viag_dest">
+            <End Role="Destino" EntitySet="Destino" />
+            <End Role="Viagem" EntitySet="Viagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AgenciaViagensModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adquire">
+          <Key>
+            <PropertyRef Name="id_adq" />
+          </Key>
+          <Property Name="id_adq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cliente" Type="Int32" Nullable="false" />
+          <Property Name="viagem" Type="Int32" Nullable="false" />
+          <Property Name="promocao" Type="Int32" />
+          <NavigationProperty Name="Cliente1" Relationship="Self.fk_adq_cli" FromRole="Adquire" ToRole="Cliente" />
+          <NavigationProperty Name="Promocao1" Relationship="Self.fk_adq_promo" FromRole="Adquire" ToRole="Promocao" />
+          <NavigationProperty Name="Viagem1" Relationship="Self.fk_adq_viag" FromRole="Adquire" ToRole="Viagem" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cli" />
+          </Key>
+          <Property Name="id_cli" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rg" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dt_nasc" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Adquire" Relationship="Self.fk_adq_cli" FromRole="Cliente" ToRole="Adquire" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Destino">
+          <Key>
+            <PropertyRef Name="id_dest" />
+          </Key>
+          <Property Name="id_dest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cidade" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uf" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="loc_desemb" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Promocao" Relationship="Self.fk_promo_dest" FromRole="Destino" ToRole="Promocao" />
+          <NavigationProperty Name="Viagem" Relationship="Self.fk_viag_dest" FromRole="Destino" ToRole="Viagem" />
+        </EntityType>
+        <EntityType Name="Promocao">
+          <Key>
+            <PropertyRef Name="id_promo" />
+          </Key>
+          <Property Name="id_promo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="destino" Type="Int32" />
+          <Property Name="desconto" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="vencimento" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Adquire" Relationship="Self.fk_adq_promo" FromRole="Promocao" ToRole="Adquire" />
+          <NavigationProperty Name="Destino1" Relationship="Self.fk_promo_dest" FromRole="Promocao" ToRole="Destino" />
+        </EntityType>
+        <EntityType Name="Viagem">
+          <Key>
+            <PropertyRef Name="id_viag" />
+          </Key>
+          <Property Name="id_viag" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="destino" Type="Int32" Nullable="false" />
+          <Property Name="partida" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="chegada" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="vlr_padrao" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Adquire" Relationship="Self.fk_adq_viag" FromRole="Viagem" ToRole="Adquire" />
+          <NavigationProperty Name="Destino1" Relationship="Self.fk_viag_dest" FromRole="Viagem" ToRole="Destino" />
+        </EntityType>
+        <Association Name="fk_adq_cli">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cli" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_adq_promo">
+          <End Role="Promocao" Type="Self.Promocao" Multiplicity="0..1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocao">
+              <PropertyRef Name="id_promo" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="promocao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_adq_viag">
+          <End Role="Viagem" Type="Self.Viagem" Multiplicity="1" />
+          <End Role="Adquire" Type="Self.Adquire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Viagem">
+              <PropertyRef Name="id_viag" />
+            </Principal>
+            <Dependent Role="Adquire">
+              <PropertyRef Name="viagem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_promo_dest">
+          <End Role="Destino" Type="Self.Destino" Multiplicity="0..1" />
+          <End Role="Promocao" Type="Self.Promocao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Destino">
+              <PropertyRef Name="id_dest" />
+            </Principal>
+            <Dependent Role="Promocao">
+              <PropertyRef Name="destino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_viag_dest">
+          <End Role="Destino" Type="Self.Destino" Multiplicity="1" />
+          <End Role="Viagem" Type="Self.Viagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Destino">
+              <PropertyRef Name="id_dest" />
+            </Principal>
+            <Dependent Role="Viagem">
+              <PropertyRef Name="destino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgenciaViagensEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adquire" EntityType="Self.Adquire" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Destino" EntityType="Self.Destino" />
+          <EntitySet Name="Promocao" EntityType="Self.Promocao" />
+          <EntitySet Name="Viagem" EntityType="Self.Viagem" />
+          <AssociationSet Name="fk_adq_cli" Association="Self.fk_adq_cli">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_adq_promo" Association="Self.fk_adq_promo">
+            <End Role="Promocao" EntitySet="Promocao" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_adq_viag" Association="Self.fk_adq_viag">
+            <End Role="Viagem" EntitySet="Viagem" />
+            <End Role="Adquire" EntitySet="Adquire" />
+          </AssociationSet>
+          <AssociationSet Name="fk_promo_dest" Association="Self.fk_promo_dest">
+            <End Role="Destino" EntitySet="Destino" />
+            <End Role="Promocao" EntitySet="Promocao" />
+          </AssociationSet>
+          <AssociationSet Name="fk_viag_dest" Association="Self.fk_viag_dest">
+            <End Role="Destino" EntitySet="Destino" />
+            <End Role="Viagem" EntitySet="Viagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AgenciaViagensModelStoreContainer" CdmEntityContainer="AgenciaViagensEntities">
+          <EntitySetMapping Name="Adquire">
+            <EntityTypeMapping TypeName="AgenciaViagensModel.Adquire">
+              <MappingFragment StoreEntitySet="Adquire">
+                <ScalarProperty Name="id_adq" ColumnName="id_adq" />
+                <ScalarProperty Name="cliente" ColumnName="cliente" />
+                <ScalarProperty Name="viagem" ColumnName="viagem" />
+                <ScalarProperty Name="promocao" ColumnName="promocao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="AgenciaViagensModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_cli" ColumnName="id_cli" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="rg" ColumnName="rg" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="dt_nasc" ColumnName="dt_nasc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Destino">
+            <EntityTypeMapping TypeName="AgenciaViagensModel.Destino">
+              <MappingFragment StoreEntitySet="Destino">
+                <ScalarProperty Name="id_dest" ColumnName="id_dest" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="uf" ColumnName="uf" />
+                <ScalarProperty Name="loc_desemb" ColumnName="loc_desemb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promocao">
+            <EntityTypeMapping TypeName="AgenciaViagensModel.Promocao">
+              <MappingFragment StoreEntitySet="Promocao">
+                <ScalarProperty Name="id_promo" ColumnName="id_promo" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+                <ScalarProperty Name="desconto" ColumnName="desconto" />
+                <ScalarProperty Name="vencimento" ColumnName="vencimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Viagem">
+            <EntityTypeMapping TypeName="AgenciaViagensModel.Viagem">
+              <MappingFragment StoreEntitySet="Viagem">
+                <ScalarProperty Name="id_viag" ColumnName="id_viag" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+                <ScalarProperty Name="partida" ColumnName="partida" />
+                <ScalarProperty Name="chegada" ColumnName="chegada" />
+                <ScalarProperty Name="vlr_padrao" ColumnName="vlr_padrao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

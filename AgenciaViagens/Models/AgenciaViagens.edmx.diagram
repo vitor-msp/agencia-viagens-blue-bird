@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="541e6eede5854a7f89081f7bd2704e90" Name="Diagram1">
+        <EntityTypeShape EntityType="AgenciaViagensModel.Adquire" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgenciaViagensModel.Cliente" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgenciaViagensModel.Destino" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgenciaViagensModel.Promocao" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgenciaViagensModel.Viagem" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="AgenciaViagensModel.fk_adq_cli" ManuallyRouted="false" />
+        <AssociationConnector Association="AgenciaViagensModel.fk_adq_promo" ManuallyRouted="false" />
+        <AssociationConnector Association="AgenciaViagensModel.fk_adq_viag" ManuallyRouted="false" />
+        <AssociationConnector Association="AgenciaViagensModel.fk_promo_dest" ManuallyRouted="false" />
+        <AssociationConnector Association="AgenciaViagensModel.fk_viag_dest" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

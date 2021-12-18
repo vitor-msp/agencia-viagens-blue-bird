@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial - Pássaro Viagens</title>
+    <style>
+        /********************* Rodapé *********************/
+		* {
+			box-sizing: border-box;
+		}
+        html {
+            height: 100%;
+			font-family: sans-serif;
+        }
+        body {
+            min-height: 100%;
+            position: relative;
+			margin: 0px;
+			padding: 0px;
+			color: white;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+			background-image: url('./AgenciaViagens/Imagens/passaros-praia.jpg');
+        }
+        body::after {
+            content: '';
+            display: block;
+            height: 150px;
+        }
+		nav {
+			background-color: #337ab7;
+			margin: 0px;
+			padding: 0px;
+		}
+		#logo {
+			line-height: calc(46px - 0.3 * 16px);
+			display: flex;
+			font-size: 1.3em;
+		}
+		ul {
+			list-style-type: none;
+			margin: 0px;
+			padding: 0px;
+		}
+		li {
+			text-decoration: none;
+			margin: 0px;
+			padding: 0px;
+			display: inline-block;
+		}
+		nav ul a {
+			display: inline-block;
+			color: white;
+			text-decoration: none;
+			cursor: pointer;
+			padding: 15px;
+		}
+		nav ul a:hover {
+			background-color: rgba(255,255,255,0.9);
+			color: #337ab7;
+		}
+		footer {
+			width: 100%;
+			position: absolute;
+			bottom: 0px;
+			text-align: center;
+			background-color: #337ab7;
+		}
+		footer a:not(:hover) {
+			text-decoration: none;
+		}
+    </style>
+</head>
+<body>
+    <nav>
+        <div style="display:flex; width: 100%; padding:0px 80px;">
+            <div id="logo">
+                <div>BlueBird <span style="font-size:0.7em;">Viagens</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; width:80%; margin-left:20px;">
+                <ul style="display:flex;">
+                    <li><a href="javascript:void(0);">Home</a></li>
+                    <li><a href="javascript:void(0);">Destinos</a></li>
+                    <li><a href="javascript:void(0);">Promoções</a></li>
+                    <li><a href="javascript:void(0);">Contato</a></li>
+                </ul>
+                <ul style="display:flex;">
+					<li><a href="javascript:void(0);">Registre-se</a></li>
+					<li><a href="javascript:void(0);">Logon</a></li>
+				</ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+    </main>
+    <footer>
+        <br />
+        <span>&copy; 2021 - BlueBird Viagens</span>
+        <br />
+        <span>Recode Pro - 2021</span>
+        <br />
+        <span>Projeto Agência de Viagens - Módulo 3</span>
+        <br />
+        <span>Desenvolvedor: Vítor Mateus Santos Parreiras</span>
+        <br />
+        <address style="font-style: normal;">
+            <span>Contato:</span> <a style="color: white;" href="mailto:vitor7jan@gmail.com">vitor7jan@gmail.com</a>
+        </address>
+		<br />
+    </footer>
+</body>
+</html>
